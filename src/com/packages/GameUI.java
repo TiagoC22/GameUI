@@ -50,7 +50,7 @@ public class GameUI implements ActionListener {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					new GameFrame(frame);
+					new Memory(frame);
 					frame.setVisible(false);
 				}
 			});

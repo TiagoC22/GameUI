@@ -16,7 +16,7 @@ import javax.swing.*;
  * @author Tiago
  */
 
-public class GameFrame implements ActionListener {
+public class Memory implements ActionListener {
 
     JFrame Game;
 
@@ -37,7 +37,7 @@ public class GameFrame implements ActionListener {
         }
     }
 
-    public GameFrame (JFrame f) { //Création du JFrame
+    public Memory(JFrame f) { //Création du JFrame
         f.setEnabled(false);
 
         Game = new JFrame("Game");
