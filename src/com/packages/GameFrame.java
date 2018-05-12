@@ -30,14 +30,14 @@ public class GameFrame implements ActionListener {
 
     private static final List<String> cards;
 
-    static {
+    static { //Création des cartes
         cards = new ArrayList<>();
         for(int i = 64; i < 96; ++i) {
             cards.add(Character.toString((char) i));
         }
     }
-    
-    public GameFrame (JFrame f) {
+
+    public GameFrame (JFrame f) { //Création du JFrame
         f.setEnabled(false);
 
         Game = new JFrame("Game");
@@ -46,8 +46,7 @@ public class GameFrame implements ActionListener {
         Game.setLayout(new GridLayout(tabint + 1, 1));
         Game.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Game.setResizable(false);
-        Game.setLocationRelativeTo(null);
-
+        Game.setLocationRelativeTo(null); //Positionnement au milieu
 
         Game.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -56,13 +55,13 @@ public class GameFrame implements ActionListener {
             }
         });
 
-        List<String> cardsForGames = new ArrayList<>();
+        List<String> cardGame = new ArrayList<>(); //Tableau de cartes
         Collections.shuffle(cards); //Mélange des cartes
         for (int i = 0; i < tabint*tabint/2; ++i) {
-            cardsForGames.add(cards.get(i));
-            cardsForGames.add(cards.get(i));
+            cardGame.add(cards.get(i));
+            cardGame.add(cards.get(i));
         }
-        Collections.shuffle(cardsForGames);
+        Collections.shuffle(cardGame);
 
         int index = 0;
         for(int k = 0; k < tabint; ++k) {
@@ -74,7 +73,7 @@ public class GameFrame implements ActionListener {
                 buttonCard.setBackground(Color.WHITE);
                 buttonCard.setPreferredSize(new Dimension(65, 65));
                 buttonCard.addActionListener(this);
-                buttonCard.setActionCommand(cardsForGames.get(index++));
+                buttonCard.setActionCommand(cardGame.get(index++));
                 panel.add(buttonCard);
             }
             Game.add(panel);
@@ -84,7 +83,7 @@ public class GameFrame implements ActionListener {
         Game.add(panelGame);
 
     }
-    private int previousCardOpened = 0;
+    private int precedentCard = 0;
     private int nbrclic = 0;
     private int cardopen = 0;
     private boolean timerStarted = false;
@@ -96,10 +95,10 @@ public class GameFrame implements ActionListener {
         new Thread(new Runnable() {
 
             @Override
-            public void run() {
+            public void run() { //Jeu
 
                 if (!timerStarted) {
-                    TimerThread = new Thread(new Timer());
+                    TimerThread = new Thread(new Time());
                     TimerThread.start();
                     timerStarted = true;
                 }
@@ -107,15 +106,14 @@ public class GameFrame implements ActionListener {
                 if(nbrclic >= 2) {
                     return;
                 }
-
                 ((JButton) e.getSource()).setEnabled(false);
                 ((JButton) e.getSource()).setText(e.getActionCommand());
 
-                if(previousCardOpened == 0) {
+                if(precedentCard == 0) {
                     tmpButton = (JButton) e.getSource();
-                    previousCardOpened = 1;
+                    precedentCard = 1;
                     nbrclic = 1;
-                } else if (previousCardOpened == 1) {
+                } else if (precedentCard == 1) {
                     nbrclic = 2;
                     if(!tmpButton.getActionCommand().equals(e.getActionCommand())) {
                         try {
@@ -132,7 +130,7 @@ public class GameFrame implements ActionListener {
                         ++cardopen;
                     }
                     nbrclic = 0;
-                    previousCardOpened = 0;
+                    precedentCard = 0;
                 }
 
                 if(finish()) {
@@ -144,7 +142,7 @@ public class GameFrame implements ActionListener {
 
     }
 
-    private class Timer implements Runnable {
+    private class Time implements Runnable { //Calcul du temps
 
         @Override
         public void run() {
