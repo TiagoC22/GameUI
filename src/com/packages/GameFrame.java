@@ -36,7 +36,7 @@ public class GameFrame implements ActionListener {
             cards.add(Character.toString((char) i));
         }
     }
-
+    
     public GameFrame (JFrame f) {
         f.setEnabled(false);
 
@@ -55,7 +55,6 @@ public class GameFrame implements ActionListener {
                 Game.dispose();
             }
         });
-
 
         List<String> cardsForGames = new ArrayList<>();
         Collections.shuffle(cards); //Mélange des cartes
@@ -85,8 +84,6 @@ public class GameFrame implements ActionListener {
         Game.add(panelGame);
 
     }
-
-
     private int previousCardOpened = 0;
     private int nbrclic = 0;
     private int cardopen = 0;
@@ -134,17 +131,13 @@ public class GameFrame implements ActionListener {
                     } else if (tmpButton.getActionCommand().equals(e.getActionCommand())){
                         ++cardopen;
                     }
-
                     nbrclic = 0;
                     previousCardOpened = 0;
                 }
 
                 if(finish()) {
                     TimerThread.interrupt();
-
                     JOptionPane.showMessageDialog(Game, "Bravo ! Vous avez gagner");
-
-
                 }
             }
         }).start();
@@ -156,7 +149,6 @@ public class GameFrame implements ActionListener {
         @Override
         public void run() {
             for(;;) {
-
                 if (Thread.interrupted()) return;
                 timerLabel.setText(String.format("%02d", mins) + ":" + String.format("%02d", secs++));
 
